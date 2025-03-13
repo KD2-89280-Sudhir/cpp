@@ -1,0 +1,45 @@
+#include<iostream>
+using namespace std;
+class employee{
+    private:
+        int id;
+        string name;
+        double salary;
+        static int generate;
+    public:
+        employee():id(++generate){
+            this->name = "";
+            this->salary = 0;
+        }
+
+        void acceptValue(){
+            cout << "Enter the Name: ";
+            cin >> this->name;
+            cout << "Enter the Salary: ";
+            cin >> this->salary;
+        }
+
+        void display(){
+            cout << "ID: " << this->id << endl;
+            cout << "Name: " << this->name << endl;
+            cout << "Salary: " << this->salary << endl;
+        }
+};
+
+int employee::generate = 100;
+int main(){
+    employee *arr[3];
+    for(int i = 0; i < 3; i++){
+        arr[i] = new employee;
+        arr[i]->acceptValue();
+    }
+    for(int i = 0; i < 3; i++){
+        arr[i]->display();
+    }
+
+    for(int i = 0; i < 3; i++){
+        delete arr[i];
+        arr[i] = nullptr;
+    }
+    return 0;
+}
