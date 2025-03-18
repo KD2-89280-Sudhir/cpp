@@ -1,82 +1,75 @@
-#include "book.h"
-#include "tape.h"
+#include "salesmanager.h"
+#include "menu.h"
+#include "display.h"
 
-int Product::generate = 0;
-int menu(){
+int main()
+{
+    Employee *emp[10];
     int choice;
-    cout << "*********************************" << endl;
-    cout << "0. EXIT" << endl;
-    cout << "1. Add book to cart" << endl;
-    cout << "2. Add tape to cart" << endl;
-    cout << "3. Display all the product in cart." << endl;
-    cout << "4. Final bill." << endl;
-    cout << "*********************************" << endl;
-    cout << "Enter the chocie -  ";
-    cin >> choice;
-    return choice;
-}
-
-void finalBill(Product **ptr, int &index){
-    double sum = 0;
-    for(int i = 0; i < index; i++){
-        sum = sum + ptr[i]->calcPrice();
-    }
-
-    cout << "Final BIll is: " << sum << endl;
-}
-
-void allProduct(Product **arr, int &index){
-    if(index == 0){
-        cout << "no products" << endl;
-    }
-    for(int i = 0; i < index; i++){
-        cout << i << " "<< "Product is: " << endl;
-        arr[i]->display();
-    }    
-}
-
-int main(){
-    Product *arr[3];
     int index = 0;
-    int choice;
-
     while((choice = menu()) != 0){
         switch(choice){
-            case 1:{
-                if(index < 3){
-                    arr[index] = new Book();
-                    arr[index]->accept();
-                    index++;
-                }else{
-                    cout << "Your cart is full" << endl;
-                }}
+            case 1:
+                {   
+                    if(index < 10){
+                        emp[index] = new Manager();
+                        emp[index]->accept();
+                        index++;
+                    }else{
+                        cout << "Database is full" << endl;
+                    }
+                }
                 break;
-            case 2: {
-                if(index < 3){
-                    arr[index] = new Tape();
-                    arr[index]->accept();
-                    index++;
-                }else{
-                    cout << "Your cart is full" << endl;
-                }}
+            case 2:
+                {
+                    if(index < 10){
+                        emp[index] = new Salesman();
+                        emp[index]->accept();
+                        index++;
+                    }else{
+                        cout << "Database is full" << endl;
+                    }
+                }
                 break;
-            case 3: 
-                allProduct(arr, index);
+            case 3:
+                {
+                    if(index < 10){
+                        emp[index] = new Salesmanager();
+                        emp[index]->accept();
+                        index++;
+                    }else{
+                        cout << "Database is full" << endl;
+                    }
+                }
                 break;
             case 4:
-                finalBill(arr, index);
+                displayAllCount(emp, index);
                 break;
-            default:
-                cout << "wrong choice ): "<< endl;
+            case 5:
+                displayAllManager(emp, index);
+                break;
+            case 6:
+                displayAllSalesman(emp, index);
+                break;
+            case 7:
+                displayAllSalesManger(emp, index);
+                break;
+            default :
+                cout << "Wrong choice. " << endl;
                 break;
         }
     }
-
-    // Clean up dynamically allocated memory
-    for (int i = 0; i < index; i++) {
-        delete arr[i];
-        arr[i] = nullptr;
+    cout << "Give us feedback:- " << endl;
+    int rating = 0;
+    cin >> rating;
+    for(int i = 0; i < rating; i++){
+        cout << "* ";
     }
-
+    cout << " Rating" << endl;
+    cout << "<Thank you.>" << endl;
+    for(int i = 0; i < index; i++){
+        delete emp[i];
+        emp[i] = nullptr;
+    };
     return 0;
 }
